@@ -1,0 +1,101 @@
+{% extends "DigitalWaves/base.html" %}
+{% load static %}
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+    <h2 class="text-center">Finaliser la commande</h2>
+    <form method="post" action="{% url 'initiate_payment' %}">
+        {% csrf_token %}
+        <input type="hidden" id="items" name="items">
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="nom">Nom</label>
+                <input type="text" name="nom" class="form-control" id="nom" placeholder="Entrez votre nom">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="email">Email</label>
+                <input type="email" name="email" class="form-control" id="email" placeholder="Entrez votre email">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="adresse">Adresse</label>
+            <input type="text" name="adresse" class="form-control" id="adresse" placeholder="Entrez votre adresse">
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="ville">Ville</label>
+                <input type="text" name="ville" class="form-control" id="ville" placeholder="Entrez votre ville">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="pays">Pays</label>
+                <select name="pays" class="form-control" id="pays">
+                    <option value="Benin">Benin</option>
+                    <option value="France">France</option>
+                    <option value="Canada">Canada</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="zipcode">Zip</label>
+                <input type="text" name="zipcode" class="form-control" id="zipcode" placeholder="Zip code">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" name="password" class="form-control" id="password" placeholder="Entrez votre mot de passe">
+        </div>
+
+        <div class="form-group">
+            <label for="amount">Montant</label>
+            <input type="text" name="amount" class="form-control" id="amount" placeholder="Entrez le montant" required>
+        </div>
+
+        <div class="form-group">
+            <label for="payment_method">Méthode de paiement</label>
+            <select name="payment_method" class="form-control" id="payment_method">
+                <option value="mobile_money">Mobile Money</option>
+                <option value="moov_money">Moov Money</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Payer</button>
+    </form>
+</div>
+
+
+<style>
+  
+    .form-group label {
+        color: #333;
+    }
+    .form-control {
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    .btn-primary {
+        background-color: orangered;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        width: 100%;
+    }
+    .btn-primary:hover {
+        background-color: #ff4500;
+    }
+</style>
+
+
+
+{% endblock %}

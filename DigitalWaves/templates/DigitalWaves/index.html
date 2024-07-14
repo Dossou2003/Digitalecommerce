@@ -1,0 +1,325 @@
+{% extends "DigitalWaves/base.html" %}
+{% load static %}
+{% block content %}
+<style>
+    .main-banner {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+        background: url('{% static "imagesprod/about-us-page-heading.jpg" %}') no-repeat center center;
+        background-size: cover;
+        position: relative;
+    }
+
+    .main-banner .overlay {
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 2rem;
+    }
+
+    
+    .search-section .btn-success {
+        background-color: #ff4500;
+        border: none;
+        color: white;
+    }
+
+    .home h1 {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        color: #ff4500;
+        text-shadow: 2px 2px 4px #000;
+        font-family: 'Times New Roman', Times, serif;
+        animation: slide 3s linear infinite;
+    }
+
+    @keyframes slide {
+        from { transform: translateX(0); }
+        to { transform: translateX(-100%); }
+    }
+
+    .home h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px #000;
+    }
+
+    .home p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+    }
+
+    .card {
+        margin: 1rem 0;
+        border: none;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card img {
+        width: 100%;
+        transition: transform 0.5s;
+    }
+
+    .card-body {
+        color: white;
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .card-body h4 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .card-body.card-text {
+        font-size: 1.2rem;
+        color: #ff4500;
+    }
+
+    .btn {
+        border: none;
+        color: white;
+        border-radius: 5px;
+        display: flex;
+    }
+
+    button {
+        margin-left: 40px;
+        background-color: #ff4500;
+        color: white;
+    }
+
+    .pagination.page-item.page-link {
+        color: #ff4500;
+        border: 1px solid #ff4500;
+    }
+
+    .pagination.page-item.page-link:hover {
+        background-color: #ff4500;
+        color: white;
+    }
+
+    .section-heading h2 {
+        color: #ff4500;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+
+    .section-heading p {
+        color: #333;
+        font-size: 1.2rem;
+        text-align: center;
+    }
+
+    .card:hover img { transform: scale(1.05); }
+    .card-body { padding: 1rem; }
+    .card-title { font-size: 1.5rem; }
+    .card-text { color: #777; }
+    .btn-outline-warning {
+        border-color: #ff4500;
+        color: #ff4500;
+    }
+
+    .btn-outline-warning:hover {
+        background-color: #ff4500;
+        color: white;
+    }
+    
+</style>
+<br>
+<br>
+
+
+<div class="search-section">
+    <form  class="card card-sm">
+        <div class="card-body row no-gutters align-items-center">
+            <div class="col">
+                <input style="width: 100%;" type="search" placeholder="Tapez le nom du produit que vous cherchez" name="item-name" class="form-control form-control-bordeless">
+            </div>
+            <div class="col-auto">
+                <button style="background-color: #FF4500;" class="btn btn-success" type="submit">Rechercher</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="main-banner" id="top">
+    <div class="home">
+        <h2 style="font-family: 'Times New Roman', Times, serif;">BIENVENUE CHEZ</h2>
+        <h1>Digital<span>Waves</span></h1>
+        <p style="color: rgb(255, 255, 255)">Découvrez nos produits uniques et faites une pause pour vous-même !</p>
+    </div>
+</div>
+
+
+
+<section class="section" id="products">
+    <div class="container">
+        <div class="section-heading">
+            <h2>Nos produits</h2>
+            <p>Découvrez nos produits uniques et faites une pause pour vous-même !</p>
+        </div>
+
+                    <div class="row">
+                        {% for produit in produits %}
+                            <div class="col-12 col-md-6 col-lg-3 col-xl-3">
+                                <div class="card">
+                                    <img src="{{ produit.image.url }}" alt="" width="200" height="200" id="zoom-in">
+                                </div>
+                                <div class="card-body" style="background-color: rgb(144, 144, 144);">
+                                    <h4 style="color: #000;" class="card-title" id="{{ produit.id }}">{{ produit.nom }}</h4>
+                                    <h4 style="text-align: center;" class="card-text">Prix:<span id="{{ produit.id }}" style="color: #FF4500;">€ {{ produit.prix }}</span> </h4>
+                                    <h4 style="text-align: center; color: black;" class="card-text">Stock: {{ produit.stock }}</h4>
+                                    <div class="btn">
+                                        <a href="{% url 'detail_produit' slug=produit.slug %}">Voir le produit</a>
+                                        <button id="popcart" class="btn panier btn-success btn-sm mt-0" data-id="{{ produit.id }}" data-nom="{{ produit.nom }}" data-prix="{{ produit.prix }}" id="addToCartButton{{ produit.id }}">Ajouter</button>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-3 offset-md-4">
+                            <ul class="pagination">
+                                {% if produits.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ produits.previous_page_number }}">Précédent</a>
+                                    </li>
+                                {% endif %}
+                                <li class="page-item active">
+                                    <a class="page-link" href="?page={{ produits.number }}">{{ produits.number }}</a>
+                                </li>
+                                {% if produits.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ produits.next_page_number }}">Suivant</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+            <section class="section" id="explore">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="left-content">
+                                <h2>Explorer Nos Produits</h2>
+                                <div class="quote">
+                                    <i class="fa fa-quote-left"></i>
+                                    <p>Venez explorer notre gamme de produits et découvrez comment nous faisons la différence !</p>
+                                </div>
+                                <p>Découvrez nos produits uniques et faites une pause pour vous-même ! Nous sommes fiers de vous présenter nos produits.</p>
+                                <p>Nous sommes heureux de vous présenter notre ligne de produits haut de gamme, conçue pour offrir la meilleure expérience. Nos produits sont élaborés avec soin et nous mettons l'accent sur la qualité et l'innovation.</p>
+                                <div class="main-border-button">
+                                    <a href="{% url 'produits' %}">Explorer</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+    console.log('Juste pour tester');
+    
+    if (localStorage.getItem('panier') == null) {
+        var panier = {};
+    } else {
+        panier = JSON.parse(localStorage.getItem('panier'));
+    }
+
+    $(document).on('click', '.panier', function() {
+        var productid = $(this).data('id');
+        var productnom = $(this).data('nom');
+        var productprix = $(this).data('prix');
+
+        if (panier[productid]) {
+            panier[productid]['quantite'] += 1;
+        } else {
+            panier[productid] = {
+                'nom': productnom,
+                'prix': productprix,
+                'quantite': 1
+            };
+        }
+
+        localStorage.setItem('panier', JSON.stringify(panier));
+        alert('Produit ajouté avec succès');
+        updateCartCount();
+    });
+
+    function updateCartCount() {
+        var count = 0;
+        for (var key in panier) {
+            count += panier[key]['quantite'];
+        }
+        $('#panier').text(count);
+    }
+
+    $(document).ready(function() {
+        updateCartCount();
+        $('[data-bs-toggle="popover"]').popover();
+    });
+
+    $(document).on('click', '#popcart', function() {
+        var cartDetails = '<h4>Votre Panier</h4><ul>';
+        var total = 0;
+
+        for (var key in panier) {
+            cartDetails += '<li>' + panier[key]['nom'] + ' - ' + panier[key]['quantite'] + ' x €' + panier[key]['prix'] + '</li>';
+            total += panier[key]['quantite'] * panier[key]['prix'];
+        }
+
+        cartDetails += '</ul><h4>Total: €' + total.toFixed(2) + '</h4>';
+        cartDetails += '<button class="btn btn-success" id="checkout">Commander</button>';
+
+        $(this).attr('data-bs-toggle', 'popover');
+        $(this).attr('data-bs-placement', 'bottom');
+        $(this).attr('data-bs-html', 'true');
+        $(this).attr('data-bs-content', cartDetails).popover('show');
+    });
+
+    $(document).on('click', function(e) {
+        $('[data-bs-toggle="popover"]').each(function() {
+            if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                $(this).popover('hide');
+            }
+        });
+    });
+
+    
+    $(document).on('click', '#checkout', function() {
+        window.location.href = '/paiement/';
+    });
+});
+
+</script>
+{% endblock %}

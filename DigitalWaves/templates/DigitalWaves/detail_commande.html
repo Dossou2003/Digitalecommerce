@@ -1,0 +1,31 @@
+{% extends "DigitalWaves/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Détails de la commande</h2>
+            <p><strong>Utilisateur:</strong> {{ commande.utilisateur.username }}</p>
+            <p><strong>Nom:</strong> {{ commande.nom }}</p>
+            <p><strong>Email:</strong> {{ commande.email }}</p>
+            <p><strong>Adresse:</strong> {{ commande.adresse }}, {{ commande.ville }}, {{ commande.pays }}</p>
+            <p><strong>Date de commande:</strong> {{ commande.date_commande }}</p>
+            <p><strong>Statut:</strong> {{ commande.statut }}</p>
+
+            <h3>Produits commandés</h3>
+            <ul>
+                {% for produit_commande in commande.produitcommande_set.all %}
+                    <li>{{ produit_commande.produit.nom }} - Quantité: {{ produit_commande.quantite }} - Prix unitaire: €{{ produit_commande.prix_unitaire }}</li>
+                {% endfor %}
+            </ul>
+
+            <h3>Facture</h3>
+            <p><strong>Montant total:</strong> €{{ facture.montant_total }}</p>
+
+          
+            <a href="{% url 'paiement' %}" class="btn btn-primary">Paiement</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

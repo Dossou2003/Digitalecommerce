@@ -1,0 +1,23 @@
+# Ignore the .env file
+.env
+
+# Ignore les fichiers de configuration de l'environnement (par exemple, settings.py dans Django)
+/config/
+
+# Ignore les fichiers de logs
+/logs/
+
+# Ignore les fichiers de sauvegarde
+*.bak
+
+# Ignore les fichiers de pycache
+__pycache__/
+*.pyc
+
+# Ignore les fichiers de base de données
+*.sqlite3
+
+new_env/
+Wave/
+venv/
+node_modules/

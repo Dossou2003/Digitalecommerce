@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+    {% load static %}
+   
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="description" content="Site ecommerce ou nous vous livrons dans 1h">
+    <meta name="amazon,products" content="ecommerce">
+    <meta name="csrf_token" content="{{ csrf_token }}">    
+    <title>{% block title %}DigitalWaves{% endblock %}</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-5.3.3-dist/css/bootstrap-grid.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-5.3.3-dist/css/bootstrap-reboot.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-5.3.3-dist/css/bootstrap-grid.min.css.map' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-5.3.3-dist/css/bootstrap-reboot.min.css.map' %}">
+
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/owl-carousel.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/flex-slider.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/lightbox.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+       
+       
+.header-area {
+    background-color: #505050;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 135px;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   
+}
+
+.header-sticky {
+    padding: 10px 0;
+}
+
+.main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-nav .logo img {
+    max-width: 200px;
+    margin-top: 65px;
+}
+
+.main-nav .nav {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    align-items: center;
+   
+}
+
+.main-nav .nav li {
+   
+    margin: 15px;
+    margin-left: 50px;
+   
+}
+
+.main-nav .nav li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.main-nav .nav li a:hover, .main-nav .nav li a.active {
+    color: orangered;
+}
+
+.main-nav .nav .submenu ul {
+    display: none;
+    position: absolute;
+    background-color: #444;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    margin-top: 15px;
+}
+
+.main-nav .nav .submenu:hover ul {
+    display: block;
+}
+
+.main-nav .nav .submenu ul li {
+    margin: 5px 0;
+}
+
+.main-nav .nav .submenu ul li a {
+    color: #fff;
+}
+
+#popcart a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#popcart {
+    border: none;
+    border-radius: 5px;
+    padding: 5px 15px;
+    margin-left: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#popcart:hover {
+    background-color: darkred;
+}
+
+        
+    </style>
+</head>
+<body> 
+    <header class="header-area header-sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">                      
+                        <a href="{% url 'index' %}" class="logo">
+                            <img style="margin-top: 5px;" src="{% static 'imagesprod/digital.png' %}" style="max-width: 200px; margin-top: -25px;" alt="DigitalWaves">
+                        </a>
+                        <ul class="nav">
+                            <li><a href="{% url 'index' %}" class="active">Accueil</a></li>
+                            <li><a href="{% url 'apropos' %}">A propos</a></li>
+                            <li><a href="{% url 'contact' %}">Contact Nous</a></li>
+                            <button style="background-color: orangered; color: white;" id="popcart" class="btn ajout" data-container="body" data-toggle="popover" data-placement="bottom" data-url="{% url 'voir_panier' %}">
+                                <a href="{% url 'voir_panier' %}">Panier (<span id="panier">0</span>)</a>
+                            </button>
+                            <li class="submenu">
+                                <a href="#">Categories</a>
+                                <ul>
+                                    <li><a href="{% url 'produit' slug='product-slug' %}">P1</a></li>
+                                    <li><a href="{% url 'produit' slug='product-slug' %}">P2</a></li>
+                                    <li><a href="{% url 'produit' slug='product-slug' %}">P3</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="{% url 'connexion' %}">Déconnexion</a></li>
+                        </ul>        
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    {% block content %}
+    {% endblock %}
+                 
+    <footer>
+        <div class="footer__copyright">
+            <p>Copyright &copy; tout droit reservés | Réalisé par AHOUANSOU Marilyne et AGUE Juniel</p>
+        </div>
+    </footer>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <style>
+       
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+    
+        footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+    
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    
+    {% block js %}
+
+    <script>
+        $(document).ready(function() {
+    $('#popcart').popover({
+        html: true,
+        content: function() {
+            return '<div id="popoverContent"></div>';
+        }
+    });
+
+    $('#popcart').on('click', function() {
+        var url = $(this).data('url'); 
+        $.ajax({
+            url: url,
+            success: function(data) {
+                $('#popoverContent').html(data);
+            }
+        });
+    });
+
+    $('body').on('click', function (e) {
+        $('[data-toggle="popover"]').each(function () {
+            if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                $(this).popover('hide');
+            }
+        });
+    });
+});
+        </script>
+    {% endblock %}
+   
+</body>
+</html>

@@ -1,0 +1,121 @@
+{% load static %}
+{% block content %}
+
+<style>
+    h1 {
+        text-align: center;
+    }
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .container {
+        max-width: 400px;
+        padding: 20px;
+        margin: 0 auto;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    .form {
+        text-align: left;
+        margin-top: 20px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    input[type=text], input[type=password] {
+        width: calc(100% - 22px);
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        font-size: 16px;
+        color: #333;
+    }
+    label {
+        display: inline-block;
+        text-align: left;
+        margin-bottom: 5px;
+        color: #000000;
+    }
+    button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: orangered;
+        color: #fff;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+    }
+    button:hover {
+        background-color: #ff4500;
+    }
+    .link {
+        margin-top: 20px;
+    }
+    .link a {
+        color: orangered;
+        text-decoration: none;
+    }
+    .link a:hover {
+        text-decoration: underline;
+    }
+    .messages {
+        margin-bottom: 20px;
+    }
+    .messages .error {
+        color: red;
+    }
+    .messages .success {
+        color: green;
+    }
+</style>
+
+<div class="container">
+    <div class="form">
+        <h1>Inscription</h1>
+        <div class="messages">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <form method="post" action="{% url 'inscription' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.nom.id_for_label }}">{{ form.nom.label }}</label>
+                {{ form.nom }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.prenom.id_for_label }}">{{ form.prenom.label }}</label>
+                {{ form.prenom }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
+                {{ form.password1 }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
+                {{ form.password2 }}
+            </div>
+            <button type="submit">S'inscrire</button>
+        </form>
+        <p>Déjà inscrit ? <a href="{% url 'connexion' %}">Connexion</a></p>
+    </div>
+</div>
+
+{% endblock %}

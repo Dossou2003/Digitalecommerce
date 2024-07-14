@@ -1,0 +1,103 @@
+{% load static %}
+{% block content %}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .container {
+        width: 30%;
+        padding: 20px;
+        margin: 0 auto;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    } 
+    .form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+    .form-group {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    input[type=text], input[type=password] {
+        width: calc(100% - 22px);
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        color: #333;
+    }
+    label {
+        text-align: left;
+        width: 100%;
+        margin-bottom: 5px;
+        display: block;
+        font-weight: bold;
+        color: #000000;
+    }
+    .erreur-messages {
+        color: red;
+        margin-bottom: 20px;
+        text-align: left;
+        width: 100%;
+    }
+    button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: orangered;
+        color: #fff;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+    }
+    button:hover {
+        background-color: #ff4500;
+    }
+    .link {
+        margin-top: 20px;
+    }
+    .link a {
+        color: orangered;
+        text-decoration: none;
+    }
+    .link a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="container">
+    <div class="form">
+        <h1>Connexion</h1>
+        <form method="post" action="{% url 'connexion' %}" class="form-group">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_username">Nom d'utilisateur</label>
+                <input type="text" id="id_username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="id_password">Mot de passe</label>
+                <input type="password" id="id_password" name="password" required>
+            </div>
+            {% if form.non_field_errors %}
+                <div class="erreur-messages">{{ form.non_field_errors }}</div>
+            {% endif %}
+            <button type="submit"><a style="color: white;" href="{% url 'index' %}">Se connecter</a></button>
+        </form>
+        <p>Pas encore inscrit ? <a href="{% url 'inscription' %}">Inscription</a></p>
+    </div>
+</div>
+
+{% endblock %}

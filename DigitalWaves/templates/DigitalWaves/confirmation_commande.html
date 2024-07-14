@@ -1,0 +1,15 @@
+{% extends "DigitalWaves/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h2>Confirmation de Commande</h2>
+    <p>Merci pour votre commande ! Voici les détails :</p>
+
+    <p>Nom de l'utilisateur: {{ commande.utilisateur }}</p>
+    <p>Date de commande: {{ commande.date_commande }}</p>
+  
+
+    <p>Merci pour votre achat!</p>
+</div>
+{% endblock %}

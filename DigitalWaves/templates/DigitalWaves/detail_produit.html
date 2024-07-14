@@ -1,0 +1,67 @@
+{% extends "DigitalWaves/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{ produit.image.url }}" alt="{{ produit.nom }}" class="img-fluid">
+        </div>
+        <div class="col-md-6">
+            <h2>{{ produit.nom }}</h2>
+            <h4>Prix: €{{ produit.prix }}</h4>
+            <p>{{ produit.description }}</p>
+            <p>Stock: {{ produit.stock }}</p>
+            <form action="{% url 'ajouter_au_panier' produit.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" id="ajouter-panier" data-id="{{ produit.id }}" data-nom="{{ produit.nom }}" data-prix="{{ produit.prix }}">Ajouter au panier</button>
+               
+                <br>
+                <br>
+                <!-- Bouton PayPal -->
+              
+                 <a style="color: rgb(0, 0, 0); height: 20px;" href="{% url 'index' %}">Retour à la liste des produits</a>
+            </form>
+            </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    var panier = JSON.parse(localStorage.getItem('panier')) || {};
+
+function updateCartCount() {
+    var count = 0;
+    for (var key in panier) {
+        count += panier[key].quantite;
+    }
+    $('#panier').text(count);
+}
+
+$(document).on('click', '#ajouter-panier', function() {
+    var productid = $(this).data('id');
+    var productnom = $(this).data('nom');
+    var productprix = $(this).data('prix');
+
+    if (panier[productid]) {
+        panier[productid].quantite += 1;
+    } else {
+        panier[productid] = {
+            nom: productnom,
+            prix: productprix,
+            quantite: 1
+        };
+    }
+
+    localStorage.setItem('panier', JSON.stringify(panier));
+    alert('Produit ajouté avec succès');
+    updateCartCount();
+});
+
+$(document).ready(function() {
+    updateCartCount();
+});
+</script>
+{% endblock %}
